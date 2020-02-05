@@ -15,7 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from astronomi.views import anasayfa_view,giris_view,kayit_view
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', anasayfa_view),
+    path('home/', anasayfa_view, name="home"),
+    path('giris_yap', giris_view),
+    path('kayit_ol', kayit_view),
 ]
