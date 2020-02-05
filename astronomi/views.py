@@ -1,15 +1,23 @@
 from django.shortcuts import render,HttpResponse,redirect
-from .forms import RegisterForm
-from django.contrib.auth import authenticate,login
+from .forms import RegisterForm,LoginForm
+from django.contrib.auth import authenticate,login, logout
 
 # Create your views here.
-def anasayfa_view(request):
+def home_view(request):
     return render(request, "anasayfa.html")
 
-def giris_view(request):
-    return render(request, "giris.html")
+def login_view(request):
+    form = LoginForm(request.POST or None)
+    if form.is_valid():
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+        login(request, user)
+        print("aa")
+        return redirect("home")
+    return render(request, "giris.html",{'form':form})
 
-def kayit_view(request):
+def register_view(request):
     form = RegisterForm(request.POST or None)
     if form.is_valid():
         user = form.save(commit=False)
@@ -18,4 +26,9 @@ def kayit_view(request):
         user.save()
         new_user = authenticate(username=user.username,password=password)
         return redirect("home")
-    return render(request,"kayit.html", {'form':form})
+    return render(request, "kayit.html", {'form': form})
+
+
+def logout_view(request):
+    logout(request)
+    return render(request, "anasayfa.html")

@@ -7,8 +7,14 @@
 <body>
 <h2>aaaa</h2>
 
+{% if request.user.is_authenticated %}
+{{ request.user.username }}
+<a href="/logout">Çıkış Yap</a>
 
-<a href="giris_yap">Giriş Yap</a>
-<a href="kayit_ol">Kayıt Ol</a>
+{% else %}
+<a href="/login">Giriş Yap</a>
+<a href="/register">Kayıt Ol</a>
+{% endif %}
+
 </body>
 </html>

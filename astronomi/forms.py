@@ -9,7 +9,10 @@ class LoginForm(forms.Form):
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
         if username and password:
-            pass
+            user = authenticate(username=username, password=password)
+            if not user:
+                raise forms.ValidationError("Kullanıcı adını ya da parolayı yanlış girdiniz!")
+        return super(LoginForm, self).clean()
 
 
 
