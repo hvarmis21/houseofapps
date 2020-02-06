@@ -1,10 +1,15 @@
 from django.shortcuts import render,HttpResponse,redirect
 from .forms import RegisterForm,LoginForm
 from django.contrib.auth import authenticate,login, logout
-
+import requests
 # Create your views here.
 def home_view(request):
-    return render(request, "anasayfa.html")
+
+    if request.user.is_authenticated:
+        response = requests.get('https://api.nasa.gov/planetary/apod?api_key=pdA7MvW4yL8zwmgyKHz3BnM8WRKR715bFowEYiU8')
+        return render(request, "anasayfa.html", {"response": response.json()})
+    else:
+        return render(request, "anasayfa.html")
 
 def login_view(request):
     form = LoginForm(request.POST or None)
@@ -13,7 +18,6 @@ def login_view(request):
         password = form.cleaned_data.get('password')
         user = authenticate(username=username, password=password)
         login(request, user)
-        print("aa")
         return redirect("home")
     return render(request, "giris.html",{'form':form})
 
