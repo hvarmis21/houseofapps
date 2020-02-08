@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+{% for i in response %}
+
+          <div class="site-section bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade-up" data-aos-delay="100">
+            <a href="single.html"><img src="{{i.link}}" alt="Image" class="img-fluid"></a>
+            <div class="p-4 bg-white">
+              <span class="d-block text-secondary small text-uppercase">{{i.data}}</span>
+              <h2 class="h5 text-black mb-3"><a href="single.html">{{i.description}}</a></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+{% endfor %}
+
+{% endblock %}
